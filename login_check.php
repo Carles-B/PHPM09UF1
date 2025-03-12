@@ -5,14 +5,85 @@ if (!isset($_POST["username"]) || !isset($_POST["password"])){
 	exit();
 }
 
-if (strlen($_POST["username"]) <= 2) {
+$username = trim($_POST["username"]);
+
+
+if (strlen($username) <= 2) {
 	echo "Error 2a: Nombre de usuario muy corto"; 
 	exit();
 }
 
-if (strlen($_POST["username"]) > 16) {
+$username = str_replace(" ","", $username); 
+
+if (strlen($username) > 16) {
 	echo "Error 2b: Nombre de usuario muy largo"; 
 	exit();
 }
 
+$username_tmp = addslashes($username);
+
+if ($username_tmp != $username){
+	echo "Error 2c: Nombre con caracters no válidos";
+	exit();
+}
+
+$password = trim($_POST["password"]);
+
+
+if (strlen($password) < 4) {
+	echo "Error 3a: Password muy corto"; 
+	exit();
+}
+
+$password = str_replace(" ","", $password); 
+
+if (strlen($password) > 16) {
+	echo "Error 3b: Password muy largo"; 
+	exit();
+}
+
+$password_tmp = addslashes($password);
+
+if ($password_tmp != $password){
+	echo "Error 3c: Password con caracters no válidos";
+	exit();
+}
+
+$password = md5($password);
+
+$query = <<<EOD
+SELECT id_user FROM users
+WHERE username='{$username}' AND password='{$password}'
+EOD;
+
+$conn = mysqli_connect("localhost", "admin", "enti", "entihub");
+
+$resultado = mysqli_query($conn, $query);
+
+if (!$resultado) {
+	echo "Error 4: Petición incorrecta"; 
+	exit;
+}
+
+$num_rows = mysqli_num_rows($resultado);
+if ($num_rows == 0) {
+	echo "Error 5: Usuario o password incorrecto";
+	exit();
+}
+if ($num_rows != 1) {
+	echo "Error 6: Usuario o password incorrecto";
+	exit();
+}
+
+$user = $resultado->fetch_assoc();
+
+session_start();
+
+$_SESSION["id_user"] = $user["id_user"];
+
+header("Location: index.php");
+exit();
+
+
 ?>
+
