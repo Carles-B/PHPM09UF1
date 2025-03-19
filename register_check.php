@@ -23,14 +23,30 @@ if (strlen($username) > 16) {
 
 $username_tmp = addslashes($username);
 
-if ($username_tmp != $username){
+if ($username_tmp !== $username){
 	echo "Error 2c: Nombre con caracters no válidos";
 	exit();
 }
-
+$username = $username_tmp
 
 #email
+
 $email = trim($_POST["email"]);
+
+$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+if (strlen($email) > 32) {
+	echo "Error: Email demasiado largo"; 
+	exit();
+}
+
+$email_safe = addslashes($email);
+
+if ($email_safe !== $email) {
+	echo "Error: Email con caracteres no validos";
+	exit();
+}
+$email = $email_safe
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	echo "Error 3b: Email no válido";
@@ -88,12 +104,12 @@ if ($password !== $repassword) {
 	exit();
 }
 
-$password = md5($password);
 
 #Comprobación email y user existentes
+
 $query = <<<EOD
-SELECT * FROM users
-WHERE email = "$email" OR username = "$username"
+SELECT id_user FROM users
+WHERE username = "{$username}"
 EOD;
 
 $conn = mysqli_connect("localhost", "admin", "enti", "entihub");
@@ -111,7 +127,29 @@ if ($num_rows != 0) {
 	exit();
 }
 
-echo "Registrado"
+$query = <<<EOD
+SELECT id_user FROM users
+WHERE email = "{$email}" 
+EOD;
 
+$conn = mysqli_connect("localhost", "admin", "enti", "entihub");
+
+$resultado = mysqli_query($conn, $query);
+
+if (!$resultado) {
+	echo "Error 6a: Petición incorrecta"; 
+	exit;
+}
+
+$num_rows = mysqli_num_rows($resultado);
+if ($num_rows != 0) {
+	echo "Error 6b: Email no válido";
+	exit();
+}
+
+$password = md5($password);
+
+echo "Registrado"
+//aqui iria el insert.
 ?>
 
