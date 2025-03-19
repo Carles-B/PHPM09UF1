@@ -1,7 +1,7 @@
 <?php 
 require_once("template.php");
 
-open_html();
+open_html("Login ENTIhub");
 echo <<<EOD
 <form method="POST" action="login_check.php">
 <h2>Login</h2>

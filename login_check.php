@@ -55,8 +55,9 @@ $query = <<<EOD
 SELECT id_user FROM users
 WHERE username='{$username}' AND password='{$password}'
 EOD;
+require_once("db_conf.php");
 
-$conn = mysqli_connect("localhost", "admin", "enti", "entihub");
+$conn = mysqli_connect($db_server, $db_user, $db_pass, $db_db);
 
 $resultado = mysqli_query($conn, $query);
 
