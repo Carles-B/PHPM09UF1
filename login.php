@@ -19,6 +19,9 @@ echo <<<EOD
 <form method="POST" action="register_check.php">
 <h2>Register</h2>
 
+<p><label for="name=register">Nombre:</label>
+<input type="text" id="name=register" name="name" /></p>
+
 <p><label for="username=register">Usuario:</label>
 <input type="text" id="username=register" name="username" /></p>
 

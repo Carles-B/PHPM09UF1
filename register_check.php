@@ -1,12 +1,36 @@
 <?php
 
 #Primero: Evitar que envien formulario vacio.
-if (!isset($_POST["username"]) || !isset($_POST["email"]) || !isset($_POST["birthdate"]) || !isset($_POST["password"]) || !isset($_POST["repassword"])){
+if (!isset($_POST["name"]) || !isset($_POST["username"]) || !isset($_POST["email"]) || !isset($_POST["birthdate"]) || !isset($_POST["password"]) || !isset($_POST["repassword"])){
 	echo "Error 1: Formulario no enviado";
 	exit();
 }
 
+#name
+
+$name = trim($_POST["name"]);
+
+if (strlen($name) <= 2) {
+	echo "Error 2a: Nombre muy corto"; 
+	exit();
+}
+
+$name = str_replace(" ","", $name); 
+
+if (strlen($name) > 16) {
+	echo "Error 2b: Nombre muy largo"; 
+	exit();
+}
+
+$name_tmp = addslashes($name);
+
+if ($name_tmp !== $name){
+	echo "Error 2c: Nombre con caracters no válidos";
+	exit();
+}
+
 #username
+
 $username = trim($_POST["username"]);
 
 if (strlen($username) <= 2) {
