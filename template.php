@@ -17,12 +17,15 @@ function open_html($title = "ENTIhub")
 <!doctype html>
 <html>
 <head>	
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{$title}</title>
+	<link rel="stylesheet" href="entihub.css">
 </head>
 
 <body>
 	<header>
-		<h1><a href="/index.php">ENTIhub</a><h1>
+		<h1><a href="/index.php">ENTIhub</a></h1>
 		<nav>
 			<ul>
 				<li><a href="/index.php">Home</a></li>

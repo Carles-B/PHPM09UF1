@@ -48,7 +48,7 @@ EOD;
 }
 
 echo <<<EOD
-	<section>
+	<section id="message-block">
 		<h2>Lo que dice la gente...</h2>
 EOD;
 
@@ -68,6 +68,8 @@ INNER JOIN
 	messages 
 ON 
 	users.id_user = messages.id_user
+WHERE
+	messages.status = 1
 ORDER BY
 	messages.post_time DESC;
 EOD;

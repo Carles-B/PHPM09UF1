@@ -1,0 +1,13 @@
+body{
+font-family:sans-serif;
+}
+main{
+width:900px;
+margin:0 auto;
+}
+section.message{
+border:1px solid #6666ff;
+border-radius:8px;
+margin:16px 0 16px 0;
+padding:16px;
+}
