@@ -17,7 +17,7 @@ if (strlen($name) <= 2) {
 
 $name = str_replace(" ","", $name); 
 
-if (strlen($name) > 16) {
+if (strlen($name) > 32) {
 	echo "Error 2b: Nombre muy largo"; 
 	exit();
 }
@@ -51,7 +51,7 @@ if ($username_tmp !== $username){
 	echo "Error 2c: Nombre con caracters no válidos";
 	exit();
 }
-$username = $username_tmp
+$username = $username_tmp;
 
 #email
 
@@ -70,7 +70,7 @@ if ($email_safe !== $email) {
 	echo "Error: Email con caracteres no validos";
 	exit();
 }
-$email = $email_safe
+$email = $email_safe;
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	echo "Error 3b: Email no válido";
@@ -147,7 +147,7 @@ if (!$resultado) {
 
 $num_rows = mysqli_num_rows($resultado);
 if ($num_rows != 0) {
-	echo "Error 6b: Usuario o email no validos";
+	echo "Error 6b: Usuario no válido";
 	exit();
 }
 
@@ -155,8 +155,6 @@ $query = <<<EOD
 SELECT id_user FROM users
 WHERE email = "{$email}" 
 EOD;
-
-$conn = mysqli_connect("localhost", "admin", "enti", "entihub");
 
 $resultado = mysqli_query($conn, $query);
 
